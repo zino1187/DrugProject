@@ -1,0 +1,103 @@
+
+csv 만드는 순서 
+1.엑셀파일에서 사용할 컬럼만 제외하고 지운다.
+2.바코드를 숫자형으로 바꿔준다 
+3.엑셀을 닫고, 텍스트 에디터에서 csv 를 연후 utf8로 저장한다.
+
+
+한글상품명	
+업체명	
+약품규격	
+제품총수량	
+제형구분	
+포장형태	
+전문/일반	
+표준코드
+
+--------------------------------------------------------
+약국
+--------------------------------------------------------
+drop table store;
+
+create  table store(
+  store_id int primary key auto_increment
+ , name  varchar(50)
+ , phone  varchar(20)
+ , addr  varchar(100)
+) default character set utf8;
+
+--------------------------------------------------------
+의약품 DB
+--------------------------------------------------------
+drop table product;
+
+create table product(
+ product_id int primary key auto_increment
+, product_name varchar(1000)
+, company varchar(100)
+, spec varchar(50)
+, amount varchar(100)
+, type varchar(30)
+, pack varchar(30)
+, professional varchar(20)
+, barcode varchar(50)
+) default character set utf8;
+
+load data infile 'db_1.csv' into table product
+CHARACTER SET UTF8
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\n'
+IGNORE 1 ROWS
+(product_name,company,spec,amount,type,pack,professional,barcode);
+
+load data infile 'db_2.csv' into table product
+CHARACTER SET UTF8
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\n'
+IGNORE 1 ROWS
+(product_name,company,spec,amount,type,pack,professional,barcode);
+
+load data infile 'db_3.csv' into table product
+CHARACTER SET UTF8
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\n'
+IGNORE 1 ROWS
+(product_name,company,spec,amount,type,pack,professional,barcode);
+
+
+load data infile 'db_4.csv' into table product
+CHARACTER SET UTF8
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\n'
+IGNORE 1 ROWS
+(product_name,company,spec,amount,type,pack,professional,barcode);
+
+
+--------------------------------------------------------
+약국별 정리 내역
+--------------------------------------------------------
+drop table asset;
+
+create table asset(
+ asset_id int primary key auto_increment
+, store_id int
+, product_id int
+, price int default 0
+, stock int default 1
+, memo varchar(30)
+) default character set utf8;
+
+
+
+select LEFT(product_name, locate('(', product_name)-1 ) from product limit 0,10;
+
+
+
+
+-Dfile.encoding=MS949
+
+

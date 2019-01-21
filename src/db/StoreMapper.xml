@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Store">
+
+	<select id="selectAll" resultType="Store">
+		select * from store order by name asc
+	</select>
+	
+	<select id="selectById" resultType="Store" parameterType="int">
+		select * from store where store_id=#{store_id}
+	</select>
+	
+	<insert id="insert" parameterType="Store">
+		insert into store(name,phone, addr) values(#{name},#{phone},#{addr})
+	</insert>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="store.Store" 			alias="Store"/>
+		<typeAlias type="product.Product" 	alias="Product"/>
+		<typeAlias type="product.Asset" 		alias="Asset"/>
+		
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="org.mariadb.jdbc.Driver" />
+				<property name="url"
+					value="jdbc:mariadb://localhost:3306/drug" />
+				<property name="username" value="root" />
+				<property name="password" value="" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="db/StoreMapper.xml" />
+		<mapper resource="db/ProductMapper.xml" />
+		<mapper resource="db/AssetMapper.xml" />
+	</mappers>
+</configuration>

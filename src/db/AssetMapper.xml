@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Asset">
+	
+	
+	<insert id="insert" parameterType="Asset">
+		insert into asset(store_id,product_id,price,memo) values(#{store.store_id}, #{product.product_id}, #{price}, #{memo})
+	</insert>	
+	
+	<resultMap type="Asset" id="join_product_store">
+		<id 				column="asset_id" 		property="asset_id"/>
+		<result 		column="price" 			property="price"/>				
+		<result 		column="stock" 			property="stock"/>				
+		<result 		column="memo" 			property="memo"/>
+		<association column="store_id" 		javaType="Store" 	property="store" 		select="Store.selectById"/>				
+		<association column="product_id" 	javaType="Product"	property="product" 	select="Product.selectById"/>				
+	</resultMap>
+	
+	<select id="selectAll" resultMap="join_product_store" parameterType="int">
+		select * from asset where store_id=#{store_id} order by asset_id asc	
+	</select>
+	
+	<!-- 중복조회 -->	
+	<select id="checkExist" resultType="Asset" parameterType="Asset">
+		select * from asset where store_id=#{store.store_id} and product_id=#{product.product_id}	 
+	</select>
+	
+	<!-- 재고량 증가 -->
+	<update id="updateStock" parameterType="int">
+		update asset set stock=stock+1 where asset_id=#{asset_id}
+	</update>
+	
+	<!-- 자산삭제 -->
+	<delete id="deleteById" parameterType="int">
+		delete from asset where asset_id=#{asset_id}
+	</delete>	
+
+	
+	<!-- 수정 -->
+	<update id="updateById" parameterType="Asset">
+		update asset set price=#{price}, stock=#{stock}, memo=#{memo} where asset_id=#{asset_id}
+	</update>
+	
+</mapper>
+
+
